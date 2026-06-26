@@ -1,17 +1,28 @@
 # ratestartupideas
 
-A new Flutter project.
+## 🚀 How to Run the Build
 
-## Getting Started
+Follow these steps to run the application locally on your emulator or physical device.
 
-This project is a starting point for a Flutter application.
+**Prerequisites:** 
+- Flutter SDK installed on your machine.
+- An emulator running (Android/iOS) or a physical device connected.
 
-A few resources to get you started if this is your first Flutter project:
+**Installation Steps:**
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/debasmitaas/ratestartupideas.git
+   cd instagram_clone
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+2. Clean the project directory to ensure a fresh environment:
+   ```bash
+    flutter clean
+3. Get the dependencies:
+   ```bash
+    flutter pub get
+4. Run the application:
+    ```bash
+     flutter run
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+**Apk Installation :**
+ Install it from the release section of the repo.
