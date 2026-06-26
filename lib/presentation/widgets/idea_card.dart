@@ -22,10 +22,27 @@ class IdeaCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      elevation: 4,
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final borderColor = isDark ? Colors.white : Colors.black;
+    final shadowColor = isDark ? Colors.white.withOpacity(0.15) : Colors.black;
+
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      decoration: BoxDecoration(
+        color: Theme.of(context).cardColor,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: borderColor,
+          width: 2.5,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: shadowColor,
+            offset: const Offset(4, 4),
+            blurRadius: 0,
+          ),
+        ],
+      ),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -34,11 +51,24 @@ class IdeaCard extends StatelessWidget {
             Row(
               children: [
                 if (showRank) ...[
-                  CircleAvatar(
-                    backgroundColor: Theme.of(context).primaryColor,
+                  Container(
+                    width: 36,
+                    height: 36,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor,
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: borderColor,
+                        width: 2,
+                      ),
+                    ),
+                    alignment: Alignment.center,
                     child: Text(
                       '#$rank',
-                      style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w900,
+                      ),
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -46,7 +76,10 @@ class IdeaCard extends StatelessWidget {
                 Expanded(
                   child: Text(
                     idea.title,
-                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w900,
+                    ),
                   ),
                 ),
                 IconButton(
@@ -58,7 +91,10 @@ class IdeaCard extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               idea.description,
-              style: TextStyle(color: Colors.grey[700]),
+              style: TextStyle(
+                color: isDark ? Colors.grey[300] : Colors.grey[800],
+                fontWeight: FontWeight.w500,
+              ),
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
             ),
@@ -66,26 +102,37 @@ class IdeaCard extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: Colors.blueAccent.withAlpha(25),
+                color: Colors.purple.shade50.withValues(alpha: 0.25),
                 borderRadius: BorderRadius.circular(8),
+                border: Border.all(
+                  color: borderColor,
+                  width: 2,
+                ),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children: [
-                      const Icon(Icons.psychology, color: Colors.blueAccent, size: 16),
+                       Icon(Icons.psychology,  size: 16),
                       const SizedBox(width: 4),
                       Text(
                         'AI Rating: ${idea.aiRating}/10',
-                        style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.blueAccent),
+                        style: TextStyle(
+                          fontWeight: FontWeight.w900,
+                          // color: Theme.of(context).primaryColor,
+                        ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 4),
                   Text(
                     idea.aiFeedback,
-                    style: const TextStyle(fontStyle: FontStyle.italic, fontSize: 13),
+                    style: const TextStyle(
+                      fontStyle: FontStyle.italic,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ],
               ),
@@ -98,19 +145,50 @@ class IdeaCard extends StatelessWidget {
                   children: [
                     const Icon(Icons.thumb_up, size: 16, color: Colors.green),
                     const SizedBox(width: 4),
-                    Text('${idea.votes} Votes', style: const TextStyle(fontWeight: FontWeight.bold)),
+                    Text(
+                      '${idea.votes} Votes',
+                      style: const TextStyle(fontWeight: FontWeight.w900),
+                    ),
                   ],
                 ),
-                ElevatedButton.icon(
-                  onPressed: () {
+                InkWell(
+                  onTap: () {
                     context.read<IdeaProvider>().toggleVote(idea.id);
                   },
-                  icon: const Icon(Icons.arrow_upward, size: 16),
-                  label: const Text('Upvote'),
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                  borderRadius: BorderRadius.circular(8),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        color: borderColor,
+                        width: 2,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: shadowColor,
+                          offset: const Offset(2, 2),
+                          blurRadius: 0,
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: const [
+                        Icon(Icons.arrow_upward, size: 16, color: Colors.white),
+                        SizedBox(width: 4),
+                        Text(
+                          'Upvote',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                )
+                ),
               ],
             )
           ],

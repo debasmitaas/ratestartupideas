@@ -20,14 +20,14 @@ class LeaderboardScreen extends StatelessWidget {
               color: Theme.of(context).primaryColor.withAlpha(25),
               child: Column(
                 children: [
-                  const Icon(Icons.emoji_events, size: 60, color: Colors.amber),
+                  Icon(Icons.leaderboard_rounded, size: 60, color:Theme.of(context).brightness == Brightness.dark ? Colors.white : Theme.of(context).primaryColor,),
                   const SizedBox(height: 8),
                   Text(
                     'Leaderboard',
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
-                      color: Theme.of(context).primaryColor,
+                      // color: Colors.black,
                     ),
                   ),
                   const Text('Top 5 Most Voted Ideas 🔥'),

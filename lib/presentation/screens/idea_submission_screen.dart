@@ -47,9 +47,9 @@ class _IdeaSubmissionScreenState extends State<IdeaSubmissionScreen> {
           _descriptionController.clear();
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
+            SnackBar(
               content: Text('Failed to get feedback. Please check API connection.'),
-              backgroundColor: Colors.red,
+              backgroundColor: Colors.deepPurple.shade100,
             ),
           );
         }
@@ -59,6 +59,10 @@ class _IdeaSubmissionScreenState extends State<IdeaSubmissionScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final borderColor = isDark ? Colors.white : Colors.black;
+    final shadowColor = isDark ? Colors.white.withOpacity(0.15) : Colors.black;
+
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Form(
@@ -86,40 +90,87 @@ class _IdeaSubmissionScreenState extends State<IdeaSubmissionScreen> {
               validator: (v) => v!.isEmpty ? 'Please enter a description' : null,
             ),
             const SizedBox(height: 24),
-            ElevatedButton(
-              onPressed: _isSubmitting ? null : _submit,
-              style: ElevatedButton.styleFrom(
+            InkWell(
+              onTap: _isSubmitting ? null : _submit,
+              borderRadius: BorderRadius.circular(12),
+              child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 16),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                decoration: BoxDecoration(
+                  color: _isSubmitting ? Colors.grey : Theme.of(context).primaryColor,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: borderColor,
+                    width: 2.5,
+                  ),
+                  boxShadow: _isSubmitting
+                      ? null
+                      : [
+                          BoxShadow(
+                            color: shadowColor,
+                            offset: const Offset(4, 4),
+                            blurRadius: 0,
+                          ),
+                        ],
+                ),
+                alignment: Alignment.center,
+                child: _isSubmitting
+                    ? const SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2.5,
+                          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                        ),
+                      )
+                    : const Text(
+                        'Get AI Feedback & Submit',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w900,
+                          color: Colors.white,
+                        ),
+                      ),
               ),
-              child: _isSubmitting 
-                  ? const CircularProgressIndicator()
-                  : const Text('Get AI Feedback & Submit', style: TextStyle(fontSize: 16)),
             ),
             if (_resultFeedback != null) ...[
               const SizedBox(height: 24),
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: Colors.blueAccent.withAlpha(25),
+                  color: Theme.of(context).cardColor,
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.blueAccent.withAlpha(50)),
+                  border: Border.all(
+                    color: borderColor,
+                    width: 2.5,
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: shadowColor,
+                      offset: const Offset(4, 4),
+                      blurRadius: 0,
+                    ),
+                  ],
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       'AI Rating: $_resultRating/10',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w900,
                         color: Colors.deepPurple,
                       ),
                     ),
                     const SizedBox(height: 8),
                     Text(
                       _resultFeedback!,
-                      style: const TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.w600,
+                        color: isDark ? Colors.white : Colors.black87,
+                      ),
                     ),
                   ],
                 ),
