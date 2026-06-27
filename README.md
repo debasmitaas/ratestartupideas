@@ -1,5 +1,5 @@
 # ratestartupideas
-
+App Link :https://drive.google.com/file/d/1o-XB9E2yuT5-IQzUXT6HBiUSptOzG2G5/view?usp=sharing
 ## 🚀 How to Run the Build
 
 Follow these steps to run the application locally on your emulator or physical device.
