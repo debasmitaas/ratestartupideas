@@ -17,7 +17,8 @@ class IdeaCard extends StatelessWidget {
   }) : super(key: key);
 
   void _shareIdea() {
-    Share.share('Check out this startup idea: ${idea.title}!\n\n${idea.description}\n\nAI Rating: ${idea.aiRating}/10');
+    final ratingStr = idea.aiRating != null ? '\n\nAI Rating: ${idea.aiRating}/10' : '';
+    Share.share('Check out this startup idea: ${idea.title}!\n\n${idea.description}$ratingStr');
   }
 
   @override
@@ -112,20 +113,21 @@ class IdeaCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                       Icon(Icons.psychology,  size: 16),
-                      const SizedBox(width: 4),
-                      Text(
-                        'AI Rating: ${idea.aiRating}/10',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w900,
-                          // color: Theme.of(context).primaryColor,
+                  if (idea.aiRating != null) ...[
+                    Row(
+                      children: [
+                        const Icon(Icons.psychology, size: 16),
+                        const SizedBox(width: 4),
+                        Text(
+                          'AI Rating: ${idea.aiRating}/10',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w900,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 4),
+                      ],
+                    ),
+                    const SizedBox(height: 4),
+                  ],
                   Text(
                     idea.aiFeedback,
                     style: const TextStyle(

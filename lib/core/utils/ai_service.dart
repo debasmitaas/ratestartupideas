@@ -47,8 +47,8 @@ Idea: "''';
       };
     } catch (e) {
       return {
-        'rating': 5,
-        'feedback': 'Could not evaluate your idea right now. Please try again.',
+        'rating': null,
+        'feedback': 'Failed to evaluate',
       };
     }
   }

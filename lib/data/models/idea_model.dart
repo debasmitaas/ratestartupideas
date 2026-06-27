@@ -5,7 +5,7 @@ class IdeaModel extends Idea {
     required String id,
     required String title,
     required String description,
-    required int aiRating,
+    int? aiRating,
     required String aiFeedback,
     int votes = 0,
     required DateTime createdAt,

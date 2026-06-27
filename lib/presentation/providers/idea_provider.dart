@@ -19,7 +19,7 @@ class IdeaProvider extends ChangeNotifier {
 
   List<Idea> get ideas => [..._ideas]..sort((a, b) {
     if (_currentSort == SortOption.rating) {
-      return b.aiRating.compareTo(a.aiRating);
+      return (b.aiRating ?? 0).compareTo(a.aiRating ?? 0);
     } else {
       return b.votes.compareTo(a.votes);
     }

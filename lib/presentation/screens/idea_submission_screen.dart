@@ -154,15 +154,17 @@ class _IdeaSubmissionScreenState extends State<IdeaSubmissionScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'AI Rating: $_resultRating/10',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w900,
-                        color: Colors.deepPurple,
+                    if (_resultRating != null) ...[
+                      Text(
+                        'AI Rating: $_resultRating/10',
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w900,
+                          color: Colors.deepPurple,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 8),
+                      const SizedBox(height: 8),
+                    ],
                     Text(
                       _resultFeedback!,
                       style: TextStyle(

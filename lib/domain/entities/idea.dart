@@ -2,7 +2,7 @@ class Idea {
   final String id;
   final String title;
   final String description;
-  final int aiRating; // 1 to 10
+  final int? aiRating; // 1 to 10 (can be null if evaluation failed)
   final String aiFeedback;
   int votes;
   final DateTime createdAt;
@@ -11,7 +11,7 @@ class Idea {
     required this.id,
     required this.title,
     required this.description,
-    required this.aiRating,
+    this.aiRating,
     required this.aiFeedback,
     this.votes = 0,
     required this.createdAt,
